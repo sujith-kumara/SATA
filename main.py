@@ -69,6 +69,16 @@ class Student(db.Model):
     number=db.Column(db.String(12))
     address=db.Column(db.String(100))
     
+class marks(db.Model):
+    KTUID=db.Column(db.String(64),primary_key=True)
+    C1=db.Column(db.String(64))
+    C2=db.Column(db.String(64))
+    C3=db.Column(db.String(64))
+    C4=db.Column(db.String(64))
+    C5=db.Column(db.String(64))
+    C6=db.Column(db.String(64))
+    C7=db.Column(db.String(64))
+    C8=db.Column(db.String(64))
 
 @app.route('/')
 def index(): 
@@ -78,6 +88,11 @@ def index():
 def studentdetails():
     query=db.engine.execute(f"SELECT * FROM `student`") 
     return render_template('studentdetails.html',query=query)
+
+@app.route('/markdetails')
+def markdetails():
+    query=db.engine.execute(f"SELECT * FROM `marks`")
+    return render_template('markdetails.html',query=query)
 
 @app.route('/triggers')
 def triggers():
