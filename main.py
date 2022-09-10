@@ -261,7 +261,8 @@ def uploadfile():
    if request.method == 'POST': # check if the method is post
       f = request.files['file'] # get the file from the files object
       # Saving the file in the required destination
-      f.save(os.path.join(app.config['UPLOAD_FOLDER'] , f.filename)) # this will secure the file
+      f.save(os.path.join(app.config['UPLOAD_FOLDER'] , 'in.pdf')) # this will secure the file
+      os.system("bash parser.sh in.pdf")
       return render_template('download.html')
 
 # Sending the file to the user
