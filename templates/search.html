@@ -31,8 +31,10 @@ Search
 
 
 <div class="form-group">
-<label for="attendance">Enter Your Roll Number</label>
+<label for="attendance">Enter Your Roll No</label>
 <input type="text" class="form-control" name="roll" id="roll" placeholder="Use Small Letter">
+<label for="attendance">Enter Your ktu ID</label>
+<input type="text" class="form-control" name="ktuid" id="ktuid" placeholder="Use Capital Letter">
 </div>
 <br>
 
@@ -59,9 +61,15 @@ Search
   <li>Number  : {{bio.number}}</li>
   <li>Address  : {{bio.address}}</li>
   <hr>
-  <h3>Attendance Status</h3>
+ <h3>Attendance Status</h3>
   <hr>
   <li>Attendance : {{attend.attendance}}</li>
+<br><br>
+<h3>RESULT</h3>
+<hr>
+{% for row in range(1,8) %}
+  <li>{{ktuidquery.KTUID}} {{ktuidquery.C1}} {{ktuidquery.C2}} {{ktuidquery.C3}}</li>
+{% endfor %}
 <br><br>
 {% else %}
 No such results

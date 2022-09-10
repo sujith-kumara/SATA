@@ -30,5 +30,5 @@ CALL dept_subj_grade_pct('EE', 'MAT201', 'S'); -- S in MAT201 in EE
 CALL dept_subj_grade_pct('ME', 'MAT201', 'S'); -- S in MAT201 in ME
 CALL dept_subj_grade_pct('EC', 'MAT201', 'S'); -- S in MAT201 in EC
 SELECT * FROM marks WHERE KTUID LIKE '%CS054%';
-DROP PROCEDURE IF EXISTS grade_pct;
-DROP PROCEDURE IF EXISTS dept_subj_grade_pct;
+-- DROP PROCEDURE IF EXISTS grade_pct;
+-- DROP PROCEDURE IF EXISTS dept_subj_grade_pct;

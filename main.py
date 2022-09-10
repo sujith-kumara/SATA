@@ -74,11 +74,11 @@ class marks(db.Model):
     C1=db.Column(db.String(64))
     C2=db.Column(db.String(64))
     C3=db.Column(db.String(64))
-    C4=db.Column(db.String(64))
-    C5=db.Column(db.String(64))
-    C6=db.Column(db.String(64))
-    C7=db.Column(db.String(64))
-    C8=db.Column(db.String(64))
+    # C4=db.Column(db.String(64))
+    # C5=db.Column(db.String(64))
+    # C6=db.Column(db.String(64))
+    # C7=db.Column(db.String(64))
+    # C8=db.Column(db.String(64))
 
 @app.route('/')
 def index(): 
@@ -133,7 +133,10 @@ def search():
         rollno=request.form.get('roll')
         bio=Student.query.filter_by(rollno=rollno).first()
         attend=Attendence.query.filter_by(rollno=rollno).first()
-        return render_template('search.html',bio=bio,attend=attend)
+        ktuid=request.form.get('ktuid')
+        ktuidquery = marks.query.filter_by(KTUID=ktuid).first()
+        print(db.engine.execute('SELECT * FROM marks'))
+        return render_template('search.html',bio=bio,attend=attend,ktuidquery=ktuidquery)#,ktuidqueryall=ktuidqueryall)
         
     return render_template('search.html')
 
