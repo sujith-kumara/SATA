@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import login_user,logout_user,login_manager,LoginManager
 from flask_login import login_required,current_user
 import json
+import os
 
 # MY db connection
 local_server= True
@@ -248,5 +249,24 @@ def test():
     except:
         return 'My db is not Connected'
 
+# Creating the upload folder
+upload_folder = "uploads"
+if not os.path.exists(upload_folder):
+   os.mkdir(upload_folder)
+
+app.config['UPLOAD_FOLDER'] = upload_folder
+
+# The path for uploading the file
+@app.route('/uploads')
+def upload_file():
+   return render_template('upload.html')
+
+@app.route('/upload', methods = ['GET', 'POST'])
+def uploadfile():
+   if request.method == 'POST': # check if the method is post
+      f = request.files['file'] # get the file from the files object
+      # Saving the file in the required destination
+      f.save(os.path.join(app.config['UPLOAD_FOLDER'] , f.filename)) # this will secure the file
+      return 'file uploaded successfully' # Display thsi message after uploading
 
 app.run(debug=True)    
