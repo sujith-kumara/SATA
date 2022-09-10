@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,session,redirect,url_for,flash
+from flask import Flask,render_template,request,session,redirect,url_for,flash,send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -249,12 +249,7 @@ def test():
     except:
         return 'My db is not Connected'
 
-# Creating the upload folder
-upload_folder = "uploads"
-if not os.path.exists(upload_folder):
-   os.mkdir(upload_folder)
-
-app.config['UPLOAD_FOLDER'] = upload_folder
+app.config['UPLOAD_FOLDER'] = os.getcwd()
 
 # The path for uploading the file
 @app.route('/uploads')
@@ -267,6 +262,11 @@ def uploadfile():
       f = request.files['file'] # get the file from the files object
       # Saving the file in the required destination
       f.save(os.path.join(app.config['UPLOAD_FOLDER'] , f.filename)) # this will secure the file
-      return 'file uploaded successfully' # Display thsi message after uploading
+      return render_template('download.html')
+
+# Sending the file to the user
+@app.route('/download')
+def download():
+   return send_file('in.csv', as_attachment=True)
 
 app.run(debug=True)    
