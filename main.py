@@ -266,7 +266,7 @@ def uploadfile():
       f = request.files['file'] # get the file from the files object
       # Saving the file in the required destination
       f.save(os.path.join(app.config['UPLOAD_FOLDER'] , 'in.pdf')) # this will secure the file
-      os.system("bash parser.sh in.pdf")
+      os.system("bash {0} in.pdf".format(os.path.join(os.getcwd(), 'parser.sh')))
       return render_template('download.html')
 
 # Sending the file to the user
