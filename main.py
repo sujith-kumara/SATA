@@ -6,10 +6,14 @@ from flask_login import login_user,logout_user,login_manager,LoginManager
 from flask_login import login_required,current_user
 import json
 import os
+from flask_ngrok import run_with_ngrok
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # MY db connection
 local_server= True
 app = Flask(__name__)
+run_with_ngrok(app)
 app.secret_key='SujithKumarA'
 
 
@@ -24,7 +28,7 @@ def load_user(user_id):
 
 
 # app.config['SQLALCHEMY_DATABASE_URL']='mysql://username:password@localhost/databas_table_name'
-app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:@localhost/studentdbms'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:root@localhost/studentdbms'
 db=SQLAlchemy(app)
 
 # here we will create db models that is tables
@@ -270,4 +274,4 @@ def uploadfile():
 def download():
    return send_file('in.csv', as_attachment=True)
 
-app.run(debug=True)    
+app.run()
