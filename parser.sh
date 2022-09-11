@@ -49,6 +49,8 @@ grep -oE "[L]*ADR[0-9]+[A-Z]{2}[0-9]{3}.*" < "in.txt" | sed "s/Absent/AB/g;s/Wit
 # echo -e "FL=$FIRST_LINE :: LL=$LAST_LINE"
 HDR_DATA=$(sed -n "${STREAM_LINES[0]},$((STREAM_LINES[1]-1))p" "./in.txt")
 FILENAME=$(echo -e "$HDR_DATA" | grep "B.Tech" | sed "s/ /_/g")
+# force save as in.csv
+FILENAME='in'
 echo -e "FILENAME: $FILENAME"
 # echo -e "${STREAM_LINES[0]} - $((STREAM_LINES[1]-1)) :: HEADER"
 echo -e "$HDR_DATA"
