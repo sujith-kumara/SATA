@@ -267,6 +267,8 @@ def uploadfile():
       # Saving the file in the required destination
       f.save(os.path.join(app.config['UPLOAD_FOLDER'] , 'in.pdf')) # this will secure the file
       os.system("bash {0} in.pdf".format(os.path.join(os.getcwd(), 'parser.sh')))
+      os.system("cp -vf {0} /var/lib/mysql-files/".format(os.path.join(os.getcwd(), 'in.csv')))
+      os.system("mysql -u root < {0}".format(os.path.join(os.getcwd(), 'import.sql')))
       return render_template('download.html')
 
 # Sending the file to the user
