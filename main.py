@@ -75,7 +75,8 @@ class Student(db.Model):
     address=db.Column(db.String(100))
     
 class marks(db.Model):
-    KTUID=db.Column(db.String(64),primary_key=True)
+    SID=db.Column(db.Integer(), primary_key=True)
+    KTUID=db.Column(db.String(64))
     C1=db.Column(db.String(64))
     C2=db.Column(db.String(64))
     C3=db.Column(db.String(64))
