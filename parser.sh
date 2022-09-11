@@ -68,3 +68,4 @@ for ((i=0; i <= STREAM_COUNTER; i++)); do
         done
     done
 done > "./${FILENAME}.csv"
+# sed '=' in.csv | sed 'N; s/\n/,/' > inln.csv

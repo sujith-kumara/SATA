@@ -20,15 +20,15 @@ SET @tnum := (SELECT COUNT(DISTINCT KTUID) FROM marks WHERE KTUID LIKE CONCAT('%
 SELECT @gnum AS NUM, @tnum AS DEN, (@gnum/@tnum)*100 AS PCT, (1-(@gnum/@tnum))*100 AS INV;
 END //
 DELIMITER ;
-CALL grade_pct('F', ''); -- clg fail n pass pct
-CALL grade_pct('F', 'CS'); -- CS fail n pass pct
-CALL grade_pct('F', 'ME'); -- ME fail n pass pct
-CALL grade_pct('F', 'EC'); -- EC fail n pass pct
-CALL grade_pct('F', 'EE'); -- EE fail n pass pct
-CALL dept_subj_grade_pct('CS', 'CSL201', 'S'); -- S in CSL201 in CS
-CALL dept_subj_grade_pct('EE', 'MAT201', 'S'); -- S in MAT201 in EE
-CALL dept_subj_grade_pct('ME', 'MAT201', 'S'); -- S in MAT201 in ME
-CALL dept_subj_grade_pct('EC', 'MAT201', 'S'); -- S in MAT201 in EC
-SELECT * FROM marks WHERE KTUID LIKE '%CS054%';
+-- CALL grade_pct('F', ''); -- clg fail n pass pct
+-- CALL grade_pct('F', 'CS'); -- CS fail n pass pct
+-- CALL grade_pct('F', 'ME'); -- ME fail n pass pct
+-- CALL grade_pct('F', 'EC'); -- EC fail n pass pct
+-- CALL grade_pct('F', 'EE'); -- EE fail n pass pct
+-- CALL dept_subj_grade_pct('CS', 'CSL201', 'S'); -- S in CSL201 in CS
+-- CALL dept_subj_grade_pct('EE', 'MAT201', 'S'); -- S in MAT201 in EE
+-- CALL dept_subj_grade_pct('ME', 'MAT201', 'S'); -- S in MAT201 in ME
+-- CALL dept_subj_grade_pct('EC', 'MAT201', 'S'); -- S in MAT201 in EC
+-- SELECT * FROM marks WHERE KTUID LIKE '%CS054%';
 -- DROP PROCEDURE IF EXISTS grade_pct;
 -- DROP PROCEDURE IF EXISTS dept_subj_grade_pct;
