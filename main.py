@@ -132,22 +132,6 @@ def search():
 
     return render_template("search.html")
 
-# @app.route("/query", methods=["POST", "GET"])
-# def query():
-#     if request.method == "POST":
-#         ktuid=request.form.get("ktuid")
-#         subject=request.form.get("subject")
-#         grade=request.form.get("grade")
-#         dept=request.form.get("dept")
-#         # query = db.engine.execute(f"SELECT * FROM marks WHERE KTUID = '{ktuid}'")
-#         query = db.engine.execute(f"SELECT * FROM marks")
-#         results = Marks.query.filter_by(KTUID={ktuid}, C1={subject}, C2={grade}, C3={dept})
-#         print(type(query))
-#         for row in query:
-#             print(row._asdict())
-#         # return render_template("query.html", results=results)
-#         return render_template("query.html", query=query)
-#     return render_template("query.html")
 @app.route("/query", methods=["POST", "GET"])
 def query():
     if request.method == "POST":
