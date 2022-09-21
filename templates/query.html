@@ -17,6 +17,10 @@
     {% endwith %}
     <form method="post">
         <p>
+            <label for="sid">sid</label>
+            <input type="text" name="sid" placeholder="sid"></input>
+        </p>
+        <p>
             <label for="ktuid">ktuid</label>
             <input type="text" name="ktuid" placeholder="ktuid"></input>
         </p>
@@ -36,17 +40,29 @@
             <button type="submit">Submit</button>
         </p>
     </form>
-    {% if query %}
-        {% for q in query %}
-            <li>
-                {{ q.SID }}
-                {{ q.KTUID }}
-                {{ q.C1 }}
-                {{ q.C2 }}
-                {{ q.C3 }}
-            </li>
-        {% endfor %}
-    {% else %}
-        No such results
-    {% endif %}
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">SID</th>
+                <th scope="col">KTUID</th>
+                <th scope="col">SUBJECT</th>
+                <th scope="col">GRADE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if query %}
+            {% for q in query %}
+                <li>
+                    {{ q.SID }}
+                    {{ q.KTUID }}
+                    {{ q.C1 }}
+                    {{ q.C2 }}
+                    {{ q.C3 }}
+                </li>
+            {% endfor %}
+        {% else %}
+            No such results
+        {% endif %}
+        </tbody>
+    </table>
 {% endblock body %}

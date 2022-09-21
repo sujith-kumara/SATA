@@ -135,6 +135,7 @@ def search():
 @app.route("/query", methods=["POST", "GET"])
 def query():
     if request.method == "POST":
+        sid=ktuid=request.form.get("sid")
         ktuid=request.form.get("ktuid")
         subject=request.form.get("subject")
         grade=request.form.get("grade")
