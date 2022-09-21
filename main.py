@@ -23,9 +23,9 @@ pymysql.install_as_MySQLdb()
 # MY db connection
 local_server = True
 app = Flask(__name__)
-run_with_ngrok(app)
+# run_with_ngrok(app)
 app.secret_key = "SujithKumarA"
-
+app.debug = True
 
 # this is for getting unique user access
 login_manager = LoginManager(app)
@@ -39,6 +39,7 @@ def load_user(user_id):
 
 # app.config['SQLALCHEMY_DATABASE_URL']='mysql://username:password@localhost/databas_table_name'
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:root@localhost/studentdbms"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 # here we will create db models that is tables
@@ -85,17 +86,12 @@ class Student(db.Model):
     address = db.Column(db.String(100))
 
 
-class marks(db.Model):
+class Marks(db.Model):
     SID = db.Column(db.Integer(), primary_key=True)
     KTUID = db.Column(db.String(64))
     C1 = db.Column(db.String(64))
     C2 = db.Column(db.String(64))
     C3 = db.Column(db.String(64))
-    # C4=db.Column(db.String(64))
-    # C5=db.Column(db.String(64))
-    # C6=db.Column(db.String(64))
-    # C7=db.Column(db.String(64))
-    # C8=db.Column(db.String(64))
 
 
 @app.route("/")
@@ -128,13 +124,29 @@ def search():
         bio = Student.query.filter_by(rollno=rollno).first()
         attend = Attendence.query.filter_by(rollno=rollno).first()
         ktuid = request.form.get("ktuid")
-        ktuidquery = marks.query.filter_by(KTUID=ktuid).first()
+        ktuidquery = Marks.query.filter_by(KTUID=ktuid).first()
         print(db.engine.execute("SELECT * FROM marks"))
         return render_template(
             "search.html", bio=bio, attend=attend, ktuidquery=ktuidquery
         )  # ,ktuidqueryall=ktuidqueryall)
 
     return render_template("search.html")
+
+@app.route("/query", methods=["POST", "GET"])
+def query():
+    if request.method == "POST":
+        ktuid=request.form.get("ktuid")
+        subject=request.form.get("subject")
+        grade=request.form.get("grade")
+        dept=request.form.get("dept")
+        results_old = db.engine.execute(f"SELECT * FROM marks WHERE KTUID = '{ktuid}'")
+        results = Marks.query.filter_by(KTUID={ktuid}, C1={subject}, C2={grade}, C3={dept})
+        print(type(results_old))
+        for row in results_old:
+            print(row._asdict())
+        # return render_template("query.html", results=results)
+        return render_template("query.html", query=results_old)
+    return render_template("query.html")
 
 
 @app.route("/delete/<string:id>", methods=["POST", "GET"])
@@ -143,7 +155,6 @@ def delete(id):
     db.engine.execute(f"DELETE FROM `student` WHERE `student`.`id`={id}")
     flash("Slot Deleted Successful", "danger")
     return redirect("/studentdetails")
-
 
 @app.route("/edit/<string:id>", methods=["POST", "GET"])
 @login_required
