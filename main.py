@@ -186,7 +186,7 @@ def query():
                     '_dept_di': dept_di
                 }
         )
-        return render_template("query.html", query=query, sid_d=dept_sid_d, ktuid_d=dept_ktuid_d, subject_d=dept_subject_d, grade_d=dept_grade_d, dept_d=dept_d)
+        return render_template("query.html", query=query, sid_d=dept_sid_d, ktuid_d=dept_ktuid_d, subject_d=dept_subject_d, grade_d=grade_d, dept_d=dept_d)
     return render_template("query.html")
 
 @app.route("/delete/<string:id>", methods=["POST", "GET"])
