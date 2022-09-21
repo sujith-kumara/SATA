@@ -186,7 +186,16 @@ def query():
                     '_dept_di': dept_di
                 }
         )
-        return render_template("query.html", query=query, sid_d=dept_sid_d, ktuid_d=dept_ktuid_d, subject_d=dept_subject_d, grade_d=grade_d, dept_d=dept_d)
+        # CALL grade_pct('F', 'CS');
+        stats = db.engine.execute(
+            text("CALL dept_subj_grade_pct(:_dept, :_subject, :_grade)"),
+            {
+                '_dept': dept_di,
+                '_subject': subject_di,
+                '_grade': grade_di,
+            }
+        )
+        return render_template("query.html", stats=stats, query=query, sid_d=dept_sid_d, ktuid_d=dept_ktuid_d, subject_d=dept_subject_d, grade_d=grade_d, dept_d=dept_d)
     return render_template("query.html")
 
 @app.route("/delete/<string:id>", methods=["POST", "GET"])

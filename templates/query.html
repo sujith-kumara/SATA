@@ -61,6 +61,30 @@
 <table class="table">
     <thead class="thead-light">
         <tr>
+            <th scope="col">Total Satisfying (DEPT|SUB|GRADE) Combination</th>
+            <th scope="col">Total Overall</th>
+            <th scope="col">PERCENTAGE</th>
+            <th scope="col">INVERSE</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if stats %}
+        {% for q in stats %}
+            <tr>
+                <th>{{ q.NUM }}
+                <th>{{ q.DEN }}
+                <th>{{ q.PCT }}
+                <th>{{ q.INV }}
+            </tr>
+        {% endfor %}
+    {% else %}
+        No such results
+    {% endif %}
+    </tbody>
+</table>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
             <th scope="col">SID</th>
             <th scope="col">KTUID</th>
             <th scope="col">SUBJECT</th>
