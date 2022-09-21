@@ -9,7 +9,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <title>Edit</title>
     </head>
-    <body class="bg-danger">
+    <body style="background-color:grey">
+        <br>
         <h3 class="text-center">
             <span>Edit Student Details</span>
         </h3>
@@ -24,23 +25,23 @@
         {% endwith %}
         <br>
         <form action="/editmarks/{{ posts.SID }}" method="post">
-            <div align="center">
+            <div align="center" style="color:white">
                 <label for="rollno">SID</label>
-                <input type="text" class="form-control" name="sid" id="sid" value={{ posts.SID }}>
+                <input type="text" name="sid" id="sid" value={{ posts.SID }}>
                 <label for="rollno">KTUID</label>
-                <input type="text" class="form-control" name="ktuid" id="ktuid" value={{ posts.KTUID }}>
+                <input type="text" name="ktuid" id="ktuid" value={{ posts.KTUID }}>
                 <label for="rollno">SUBJECT</label>
-                <input type="text" class="form-control" name="subject" id="subject" value={{ posts.C1 }}>
+                <input type="text" name="subject" id="subject" value={{ posts.C1 }}>
                 <label for="rollno">GRADE</label>
-                <input type="text" class="form-control" name="grade" id="grade" value={{ posts.C2 }}>
+                <input type="text" name="grade" id="grade" value={{ posts.C2 }}>
                 <label for="rollno">DEPARTMENT</label>
-                <select class="form-control" id="dept" name="dept" required>
+                <select id="dept" name="dept" required>
                     <option selected>{{ posts.C3 }}</option>
                     {% for d in depts %}
                         <option value="{{ d.C3 }}">{{ d.C3 }}</option>
                     {% endfor %}
                 </select>
-                <br>
+                <br><br>
                 <button type="submit">Submit Record</button>
             </div>
         </form>

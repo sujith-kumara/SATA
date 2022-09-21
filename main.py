@@ -211,7 +211,7 @@ def editmarks(id):
         grade=request.form.get("grade")
         dept=request.form.get("dept")
         query = db.engine.execute(f"UPDATE `marks` SET `KTUID`='{ktuid}', `C1`='{subject}', `C2`='{grade}', `C3`='{dept}' WHERE SID='{sid}'")
-        flash("Slot is Updates", "success")
+        flash("Slot Updated", "success")
         return redirect("/markdetails")
     return render_template("editmarks.html", posts=posts, depts=depts)
 
@@ -239,7 +239,7 @@ def edit(id):
         query = db.engine.execute(
             f"UPDATE `student` SET `rollno`='{rollno}',`sname`='{sname}',`sem`='{sem}',`gender`='{gender}',`branch`='{branch}',`email`='{email}',`number`='{num}',`address`='{address}'"
         )
-        flash("Slot is Updates", "success")
+        flash("Slot Updated", "success")
         return redirect("/studentdetails")
 
     return render_template("edit.html", posts=posts, dept=dept)
