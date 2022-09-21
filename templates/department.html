@@ -1,11 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}
-Add Department
-{% endblock title %}
-
-
-
-{% block body %}
+{% block intro %}
  <h3 class="text-center bg-danger text-white"><span>Add Department</span> </h3>
   
 {% with messages=get_flashed_messages(with_categories=true) %}
@@ -47,7 +41,7 @@ Add Department
 <div class="col-md-4"></div>
 
 </div></div>
-
-
-
-{% endblock body %}
+{% endblock intro %}
+{% block title %}
+Add Department
+{% endblock title %}
