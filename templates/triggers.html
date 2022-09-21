@@ -1,11 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'base-minimal.html' %}
 {% block title %}
     Triggers
 {% endblock title %}
-{% block intro %}
-    <h3 class="text-center">
-        <span>Student Triggers Records</span>
-    </h3>
+{% block body %}
+<br><br><br>
     {% with messages=get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% for category, message in messages %}
@@ -38,4 +36,4 @@
                 </tbody>
             </table>
         </div>
-    {% endblock intro %}
+    {% endblock body %}
