@@ -22,18 +22,19 @@
     return false;
   });
 
-  // Header fixed on scroll
-  $(window).scroll(function() {
-    if ($(this).scrollTop() > 100) {
-      $('#header').addClass('header-scrolled');
-    } else {
-      $('#header').removeClass('header-scrolled');
-    }
-  });
+  // // Header fixed on scroll
+  // $(window).scroll(function() {
+  //   if ($(this).scrollTop() > 100) {
+  //     $('#header').addClass('header-scrolled');
+  //   } else {
+  //     $('#header').removeClass('header-scrolled');
+  //   }
+  // });
 
-  if ($(window).scrollTop() > 100) {
-    $('#header').addClass('header-scrolled');
-  }
+  // if ($(window).scrollTop() > 100) {
+  //   $('#header').addClass('header-scrolled');
+  // }
+  $('#header').addClass('header-scrolled');
 
   // Initialize Venobox
   $(window).on('load', function() {

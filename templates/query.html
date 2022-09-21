@@ -1,11 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'base-minimal.html' %}
 {% block title %}
     Query
 {% endblock title %}
 {% block body %}
-<h3 class="text-center" style="color:white">
-    <span>Query</span>
-</h3>
 {% with messages=get_flashed_messages(with_categories=true) %}
 {% if messages %}
     {% for category, message in messages %}
@@ -15,8 +12,9 @@
     {% endfor %}
 {% endif %}
 {% endwith %}
+<br><br><br><br>
 <form method="post">
-<div align="center">
+<!-- <div align="center">
     <p>
         <input type="text" name="sid" placeholder="SID"></input>
         <input type="text" name="ktuid" placeholder="KTUID"></input>
@@ -24,8 +22,8 @@
         <input type="text" name="grade" placeholder="GRADE"></input>
         <input type="text" name="dept" placeholder="DEPARTMENT"></input>
     </p>
-</div>
-<div>
+</div> -->
+<div align="center">
     <select name="sid_di" id="sid_di">
         <option selected>SID</option>
         {% for d in sid_d %}
@@ -56,8 +54,9 @@
         <option value="{{d.C3}}">{{d.C3}}</option>
         {% endfor %}
     </select>
+    <button type="submit">Submit</button>
 </div>
-<br><button type="submit">Submit</button><br>
+<br>
 </form>
 <table class="table">
     <thead class="thead-light">
