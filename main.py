@@ -194,6 +194,12 @@ def query():
         return render_template("query.html", stats=stats, query=query, sid_d=dept_sid_d, ktuid_d=dept_ktuid_d, subject_d=dept_subject_d, grade_d=grade_d, dept_d=dept_d)
     return render_template("query.html")
 
+@app.route("/deletemarks/<string:id>", methods=["POST", "GET"])
+def deletemarks(id):
+    db.engine.execute(f"DELETE FROM marks WHERE marks.SID='{id}'")
+    flash("Slot Deleted Successful", "danger")
+    return redirect("/markdetails")
+
 @app.route("/delete/<string:id>", methods=["POST", "GET"])
 @login_required
 def delete(id):

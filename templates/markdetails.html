@@ -17,15 +17,11 @@
         <table class="table">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">ktuid</th>
-                    <th scope="col">c1</th>
-                    <th scope="col">c2</th>
-                    <th scope="col">c3</th>
-                    <!-- <th scope="col">c4</th>
-                          <th scope="col">c5</th>
-                          <th scope="col">c6</th>
-                          <th scope="col">c7</th>
-                          <th scope="col">c8</th> -->
+                    <th scope="col">SID</th>
+                    <th scope="col">KTUID</th>
+                    <th scope="col">SUBJECT</th>
+                    <th scope="col">GRADE</th>
+                    <th scope="col">DEPARTMENT</th>
                     <th scope="col">EDIT</th>
                     <th scope="col">DELETE</th>
                 </tr>
@@ -33,7 +29,8 @@
             <tbody>
                 {% for post in query %}
                     <tr>
-                        <th scope="row">{{ post.KTUID }}</th>
+                        <th scope="row">{{ post.SID }}</th>
+                        <td>{{ post.KTUID }}</td>
                         <td>{{ post.C1 }}</td>
                         <td>{{ post.C2 }}</td>
                         <td>{{ post.C3 }}</td>
@@ -43,13 +40,13 @@
                               <td>{{post.C7}}</td>
                               <td>{{post.C8}}</td> -->
                         <td>
-                            <a href="/edit/{{ post.KTUID }}">
+                            <a href="/editmarks/{{ post.KTUID }}">
                                 <button class="btn btn-primary">Edit
                                 </button>
                             </a>
                         </td>
                         <td>
-                            <a href="/delete/{{ post.KTUID }}">
+                            <a href="/deletemarks/{{ post.SID }}">
                                 <button onclick="return confirm('Are you sure to Delete data');" class="btn btn-danger">Delete
                                 </button>
                             </a>
