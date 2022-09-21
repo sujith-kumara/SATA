@@ -8,6 +8,7 @@ from flask import (
     flash,
     send_file,
 )
+from sqlalchemy import text
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -140,6 +141,7 @@ def query():
         subject=request.form.get("subject")
         grade=request.form.get("grade")
         dept=request.form.get("dept")
+        print(f"NM: sid {sid} ktuid {ktuid} subject {subject} grade {grade} dept {dept}")
         # query = db.engine.execute(f"SELECT * FROM `marks` WHERE KTUID = '{ktuid}'")
         sid_d = db.engine.execute(f"SELECT DISTINCT SID FROM `marks`")
         ktuid_d = db.engine.execute(f"SELECT DISTINCT KTUID FROM `marks`")
@@ -153,9 +155,23 @@ def query():
         subject_di=request.form.get("subject_di")
         grade_di=request.form.get("grade_di")
         dept_di=request.form.get("dept_di")
-        # dept_subject_d = db.engine.execute(f"SELECT DISTINCT C1 FROM `marks` WHERE C3 = '{dept_di}'")
-        query = db.engine.execute(f"SELECT * FROM `marks` WHERE KTUID = '{ktuid_di}'")
-        return render_template("query.html", query=query, sid_d=sid_d, ktuid_d=ktuid_d, subject_d=subject_d, grade_d=grade_d, dept_d=dept_d)
+        if sid_di == 'SID':
+            sid_di = ''
+        if ktuid_di == 'KTUID':
+            ktuid_di = ''
+        if subject_di == 'SUBJECT':
+            subject_di = ''
+        if grade_di == 'GRADE':
+            grade_di = ''
+        if dept_di == 'DEPARTMENT':
+            dept_di = ''
+        print(f"DI: sid_di {sid_di} ktuid_di {ktuid_di} subject_di {subject_di} grade_di {grade_di} dept_di {dept_di}")
+        dept_sid_d = db.engine.execute(f"SELECT DISTINCT SID FROM `marks` WHERE C3 = '{dept_di}'")
+        dept_ktuid_d = db.engine.execute(f"SELECT DISTINCT KTUID FROM `marks` WHERE C3 = '{dept_di}'")
+        dept_subject_d = db.engine.execute(f"SELECT DISTINCT C1 FROM `marks` WHERE C3 = '{dept_di}'")
+        dept_grade_d = db.engine.execute(f"SELECT DISTINCT C2 FROM `marks` WHERE C3 = '{dept_di}'")
+        query = db.engine.execute(text("SELECT * FROM marks WHERE SID LIKE CONCAT('%', :_sid_di, '%') AND KTUID LIKE CONCAT('%', :_ktuid_di, '%') AND C1 LIKE CONCAT('%', :_subject_di, '%') AND C2 LIKE CONCAT('%', :_grade_di, '%') AND C3 LIKE CONCAT('%', :_dept_di, '%')"), {'_sid_di': sid_di,'_ktuid_di': ktuid_di,'_grade_di': grade_di,'_subject_di': subject_di,'_dept_di': dept_di})
+        return render_template("query.html", query=query, sid_d=dept_sid_d, ktuid_d=dept_ktuid_d, subject_d=dept_subject_d, grade_d=dept_grade_d, dept_d=dept_d)
     return render_template("query.html")
 
 @app.route("/delete/<string:id>", methods=["POST", "GET"])
