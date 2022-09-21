@@ -1,8 +1,8 @@
-{% extends 'auth.html' %}
+{% extends 'base.html' %}
 {% block title %}
 login
 {% endblock title %}
-{% block content %}
+{% block intro %}
  <h1 class="mb-4 pb-0"><span>Login</span> </h1>
   
 {% with messages=get_flashed_messages(with_categories=true) %}
@@ -36,4 +36,4 @@ login
       <a href="/signup" class="about-btn scrollto">Signup</a>
 </form>
      
-{% endblock content %}
+{% endblock intro %}
