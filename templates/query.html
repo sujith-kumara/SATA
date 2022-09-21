@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}
-    Triggers
+    Query
 {% endblock title %}
-{% block intro %}
+{% block body %}
     <h3 class="text-center">
-        <span>Student Triggers Records</span>
+        <span>Query</span>
     </h3>
     {% with messages=get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -15,27 +15,38 @@
         {% endfor %}
     {% endif %}
     {% endwith %}
-    <br>
-        <div class="container mt-4">
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">TID</th>
-                        <th scope="col">ROLL NUMBER</th>
-                        <th scope="col">ACTION</th>
-                        <th scope="col">TIMESTAMP</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for post in query %}
-                        <tr>
-                            <th scope="row">{{ post.tid }}</th>
-                            <td>{{ post.rollno }}</td>
-                            <td>{{ post.action }}</td>
-                            <td>{{ post.timestamp }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% endblock intro %}
+    <form method="post">
+        <p>
+            <label for="ktuid">ktuid</label>
+            <input type="text" name="ktuid" placeholder="ktuid"></input>
+        </p>
+        <p>
+            <label for="subject">subject</label>
+            <input type="text" name="subject" placeholder="subject"></input>
+        </p>
+        <p>
+            <label for="grade">grade</label>
+            <input type="text" name="grade" placeholder="grade"></input>
+        </p>
+        <p>
+            <label for="dept">dept</label>
+            <input type="text" name="dept" placeholder="dept"></input>
+        </p>
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+    </form>
+    {% if query %}
+        {% for q in query %}
+            <li>
+                {{ q.SID }}
+                {{ q.KTUID }}
+                {{ q.C1 }}
+                {{ q.C2 }}
+                {{ q.C3 }}
+            </li>
+        {% endfor %}
+    {% else %}
+        No such results
+    {% endif %}
+{% endblock body %}
