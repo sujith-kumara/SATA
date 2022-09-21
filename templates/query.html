@@ -3,54 +3,86 @@
     Query
 {% endblock title %}
 {% block intro %}
-    <h3 class="text-center" style="color:white">
-        <span>Query</span>
-    </h3>
-    {% with messages=get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                {{ message }}
-            </div>
+<h3 class="text-center" style="color:white">
+    <span>Query</span>
+</h3>
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+<form method="post">
+<div align="center">
+    <p>
+        <input type="text" name="sid" placeholder="SID"></input>
+        <input type="text" name="ktuid" placeholder="KTUID"></input>
+        <input type="text" name="subject" placeholder="SUBJECT"></input>
+        <input type="text" name="grade" placeholder="GRADE"></input>
+        <input type="text" name="dept" placeholder="DEPARTMENT"></input>
+    </p>
+</div>
+<div>
+    <select name="sid_di" id="sid_di">
+        <option selected>SID</option>
+        {% for d in sid_d %}
+        <option value="{{d.SID}}">{{d.SID}}</option>
         {% endfor %}
-    {% endif %}
-    {% endwith %}
-    <form method="post">
-    <div align="center">
-        <p>
-            <input type="text" name="sid" placeholder="SID"></input>
-            <input type="text" name="ktuid" placeholder="KTUID"></input>
-            <input type="text" name="subject" placeholder="SUBJECT"></input>
-            <input type="text" name="grade" placeholder="GRADE"></input>
-            <input type="text" name="dept" placeholder="DEPARTMENT"></input>
-            <button type="submit">Submit</button>
-        </p>
-    </div>
-    </form>
-    <table class="table" style="color:white;">
-        <thead class="thead-light">
+    </select>
+    <select name="ktuid_di" id="ktuid_di">
+        <option selected>KTUID</option>
+        {% for d in ktuid_d %}
+        <option value="{{d.KTUID}}">{{d.KTUID}}</option>
+        {% endfor %}
+    </select>
+    <select name="subject_di" id="subject_di">
+        <option selected>SUBJECT</option>
+        {% for d in subject_d %}
+        <option value="{{d.C1}}">{{d.C1}}</option>
+        {% endfor %}
+    </select>
+    <select name="grade_di" id="grade_di">
+        <option selected>GRADE</option>
+        {% for d in grade_d %}
+        <option value="{{d.C2}}">{{d.C2}}</option>
+        {% endfor %}
+    </select>
+    <select name="dept_di" id="dept_di">
+        <option selected>DEPARTMENT</option>
+        {% for d in dept_d %}
+        <option value="{{d.C3}}">{{d.C3}}</option>
+        {% endfor %}
+    </select>
+</div>
+<br><button type="submit">Submit</button><br>
+</form>
+<table class="table" style="color:white;">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">SID</th>
+            <th scope="col">KTUID</th>
+            <th scope="col">SUBJECT</th>
+            <th scope="col">GRADE</th>
+            <th scope="col">DEPARTMENT</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if query %}
+        {% for q in query %}
             <tr>
-                <th scope="col">SID</th>
-                <th scope="col">KTUID</th>
-                <th scope="col">SUBJECT</th>
-                <th scope="col">GRADE</th>
-                <th scope="col">DEPARTMENT</th>
+                <th>{{ q.SID }}
+                <th>{{ q.KTUID }}
+                <th>{{ q.C1 }}
+                <th>{{ q.C2 }}
+                <th>{{ q.C3 }}
             </tr>
-        </thead>
-        <tbody>
-            {% if query %}
-            {% for q in query %}
-                <tr>
-                    <th>{{ q.SID }}
-                    <th>{{ q.KTUID }}
-                    <th>{{ q.C1 }}
-                    <th>{{ q.C2 }}
-                    <th>{{ q.C3 }}
-                </tr>
-            {% endfor %}
-        {% else %}
-            No such results
-        {% endif %}
-        </tbody>
-    </table>
+        {% endfor %}
+    {% else %}
+        No such results
+    {% endif %}
+    </tbody>
+</table>
 {% endblock intro %}
