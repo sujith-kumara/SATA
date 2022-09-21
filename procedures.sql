@@ -5,15 +5,17 @@
 -- LINES TERMINATED BY '\n'
 -- IGNORE 1 ROWS;
 USE studentdbms;
+DROP PROCEDURE IF EXISTS grade_pct;
+DROP PROCEDURE IF EXISTS dept_subj_grade_pct;
 -- cls && mysql -u root < "C:\Users\sujit\OneDrive\Desktop\sata\StudentManagement-System-dbms-miniproject-main\student management\import_csv.sql"
 DELIMITER //
-CREATE OR REPLACE PROCEDURE grade_pct(IN grade VARCHAR(64), IN dept VARCHAR(64)) BEGIN
+CREATE PROCEDURE grade_pct(IN grade VARCHAR(64), IN dept VARCHAR(64)) BEGIN
 SELECT CONCAT('DEPT=', dept, ' GRADE=', grade) AS '';
 SET @gnum := (SELECT COUNT(DISTINCT KTUID) FROM marks WHERE C2 LIKE CONCAT('%', grade, '%') AND KTUID LIKE CONCAT('%', dept, '%'));
 SET @tnum := (SELECT COUNT(DISTINCT KTUID) FROM marks WHERE KTUID LIKE CONCAT('%', dept, '%'));
 SELECT @gnum AS NUM, @tnum AS DEN, (@gnum/@tnum)*100 AS PCT, (1-(@gnum/@tnum))*100 AS INV;
 END //
-CREATE OR REPLACE PROCEDURE dept_subj_grade_pct(IN dept VARCHAR(64), IN subj VARCHAR(64), IN grade VARCHAR(64)) BEGIN
+CREATE PROCEDURE dept_subj_grade_pct(IN dept VARCHAR(64), IN subj VARCHAR(64), IN grade VARCHAR(64)) BEGIN
 SELECT CONCAT('DEPT=', dept, ' SUBJ=', subj, ' GRAD=', grade) AS '';
 SET @gnum := (SELECT COUNT(DISTINCT KTUID) FROM marks WHERE C1 LIKE CONCAT('%', subj, '%') AND C2 LIKE CONCAT('%', grade, '%') AND KTUID LIKE CONCAT('%', dept, '%'));
 SET @tnum := (SELECT COUNT(DISTINCT KTUID) FROM marks WHERE KTUID LIKE CONCAT('%', dept, '%'));
