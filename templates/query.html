@@ -2,8 +2,8 @@
 {% block title %}
     Query
 {% endblock title %}
-{% block body %}
-    <h3 class="text-center">
+{% block intro %}
+    <h3 class="text-center" style="color:white">
         <span>Query</span>
     </h3>
     {% with messages=get_flashed_messages(with_categories=true) %}
@@ -16,53 +16,41 @@
     {% endif %}
     {% endwith %}
     <form method="post">
+    <div align="center">
         <p>
-            <label for="sid">sid</label>
-            <input type="text" name="sid" placeholder="sid"></input>
-        </p>
-        <p>
-            <label for="ktuid">ktuid</label>
-            <input type="text" name="ktuid" placeholder="ktuid"></input>
-        </p>
-        <p>
-            <label for="subject">subject</label>
-            <input type="text" name="subject" placeholder="subject"></input>
-        </p>
-        <p>
-            <label for="grade">grade</label>
-            <input type="text" name="grade" placeholder="grade"></input>
-        </p>
-        <p>
-            <label for="dept">dept</label>
-            <input type="text" name="dept" placeholder="dept"></input>
-        </p>
-        <p>
+            <input type="text" name="sid" placeholder="SID"></input>
+            <input type="text" name="ktuid" placeholder="KTUID"></input>
+            <input type="text" name="subject" placeholder="SUBJECT"></input>
+            <input type="text" name="grade" placeholder="GRADE"></input>
+            <input type="text" name="dept" placeholder="DEPARTMENT"></input>
             <button type="submit">Submit</button>
         </p>
+    </div>
     </form>
-    <table class="table">
+    <table class="table" style="color:white;">
         <thead class="thead-light">
             <tr>
                 <th scope="col">SID</th>
                 <th scope="col">KTUID</th>
                 <th scope="col">SUBJECT</th>
                 <th scope="col">GRADE</th>
+                <th scope="col">DEPARTMENT</th>
             </tr>
         </thead>
         <tbody>
             {% if query %}
             {% for q in query %}
-                <li>
-                    {{ q.SID }}
-                    {{ q.KTUID }}
-                    {{ q.C1 }}
-                    {{ q.C2 }}
-                    {{ q.C3 }}
-                </li>
+                <tr>
+                    <th>{{ q.SID }}
+                    <th>{{ q.KTUID }}
+                    <th>{{ q.C1 }}
+                    <th>{{ q.C2 }}
+                    <th>{{ q.C3 }}
+                </tr>
             {% endfor %}
         {% else %}
             No such results
         {% endif %}
         </tbody>
     </table>
-{% endblock body %}
+{% endblock intro %}
