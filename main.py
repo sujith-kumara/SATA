@@ -351,6 +351,7 @@ def uploadfile():
             )
         )
         os.system("mysql -u root < {0}".format(os.path.join(os.getcwd(), "import.sql")))
+        os.system("mysql -u root < {0}".format(os.path.join(os.getcwd(), "procedures.sql")))
         return render_template("download.html")
 
 
