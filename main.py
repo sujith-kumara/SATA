@@ -200,6 +200,21 @@ def deletemarks(id):
     flash("Slot Deleted Successful", "danger")
     return redirect("/markdetails")
 
+@app.route("/editmarks/<string:id>", methods=["POST", "GET"])
+def editmarks(id):
+    depts = db.engine.execute(f"SELECT DISTINCT C3 FROM `marks`")
+    posts = Marks.query.filter_by(SID=id).first()
+    if request.method == "POST":
+        sid=request.form.get("sid")
+        ktuid=request.form.get("ktuid")
+        subject=request.form.get("subject")
+        grade=request.form.get("grade")
+        dept=request.form.get("dept")
+        query = db.engine.execute(f"UPDATE `marks` SET `KTUID`='{ktuid}', `C1`='{subject}', `C2`='{grade}', `C3`='{dept}' WHERE SID='{sid}'")
+        flash("Slot is Updates", "success")
+        return redirect("/markdetails")
+    return render_template("editmarks.html", posts=posts, depts=depts)
+
 @app.route("/delete/<string:id>", methods=["POST", "GET"])
 @login_required
 def delete(id):

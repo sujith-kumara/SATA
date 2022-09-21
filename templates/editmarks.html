@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta
+        name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <title>Edit</title>
+    </head>
+    <body class="bg-danger">
+        <h3 class="text-center">
+            <span>Edit Student Details</span>
+        </h3>
+        {% with messages=get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+        <form action="/editmarks/{{ posts.SID }}" method="post">
+            <div align="center">
+                <label for="rollno">SID</label>
+                <input type="text" class="form-control" name="sid" id="sid" value={{ posts.SID }}>
+                <label for="rollno">KTUID</label>
+                <input type="text" class="form-control" name="ktuid" id="ktuid" value={{ posts.KTUID }}>
+                <label for="rollno">SUBJECT</label>
+                <input type="text" class="form-control" name="subject" id="subject" value={{ posts.C1 }}>
+                <label for="rollno">GRADE</label>
+                <input type="text" class="form-control" name="grade" id="grade" value={{ posts.C2 }}>
+                <label for="rollno">DEPARTMENT</label>
+                <select class="form-control" id="dept" name="dept" required>
+                    <option selected>{{ posts.C3 }}</option>
+                    {% for d in depts %}
+                        <option value="{{ d.C3 }}">{{ d.C3 }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <button type="submit">Submit Record</button>
+            </div>
+        </form>
+    </body>
+</html></div><!-- Optional JavaScript; choose one of the two! --><!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) --><script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script><!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+            --></body></html>
