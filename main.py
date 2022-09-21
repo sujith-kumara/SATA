@@ -104,34 +104,6 @@ def markdetails():
 def triggers():
     query=db.engine.execute(f"SELECT * FROM `trig`") 
     return render_template('triggers.html',query=query)
-@app.route('/department',methods=['POST','GET'])
-def department():
-    if request.method=="POST":
-        dept=request.form.get('dept')
-        query=Department.query.filter_by(branch=dept).first()
-        if query:
-            flash("Department Already Exist","warning")
-            return redirect('/department')
-        dep=Department(branch=dept)
-        db.session.add(dep)
-        db.session.commit()
-        flash("Department Addes","success")
-    return render_template('department.html')
-
-@app.route('/addattendance',methods=['POST','GET'])
-def addattendance():
-    query=db.engine.execute(f"SELECT * FROM `student`") 
-    if request.method=="POST":
-        rollno=request.form.get('rollno')
-        attend=request.form.get('attend')
-        print(attend,rollno)
-        atte=Attendence(rollno=rollno,attendance=attend)
-        db.session.add(atte)
-        db.session.commit()
-        flash("Attendance added","warning")
-
-        
-    return render_template('attendance.html',query=query)
 
 @app.route('/search',methods=['POST','GET'])
 def search():
