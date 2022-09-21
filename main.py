@@ -125,12 +125,8 @@ def search():
         bio = Student.query.filter_by(rollno=rollno).first()
         attend = Attendence.query.filter_by(rollno=rollno).first()
         ktuid = request.form.get("ktuid")
-        ktuidquery = Marks.query.filter_by(KTUID=ktuid).first()
-        print(db.engine.execute("SELECT * FROM marks"))
-        return render_template(
-            "search.html", bio=bio, attend=attend, ktuidquery=ktuidquery
-        )  # ,ktuidqueryall=ktuidqueryall)
-
+        query = db.engine.execute(f"SELECT * FROM marks WHERE KTUID='{ktuid}'")
+        return render_template("search.html", bio=bio, attend=attend, query=query)
     return render_template("search.html")
 
 @app.route("/query", methods=["POST", "GET"])

@@ -1,11 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'base-minimal.html' %}
 {% block title %}
     Student Details
 {% endblock title %}
 {% block body %}
-    <h3 class="text-center">
-        <span>Student Details</span>
-    </h3>
+<br><br><br>
     {% with messages=get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% for category, message in messages %}
