@@ -170,7 +170,22 @@ def query():
         dept_ktuid_d = db.engine.execute(f"SELECT DISTINCT KTUID FROM `marks` WHERE C3 = '{dept_di}'")
         dept_subject_d = db.engine.execute(f"SELECT DISTINCT C1 FROM `marks` WHERE C3 = '{dept_di}'")
         dept_grade_d = db.engine.execute(f"SELECT DISTINCT C2 FROM `marks` WHERE C3 = '{dept_di}'")
-        query = db.engine.execute(text("SELECT * FROM marks WHERE SID LIKE CONCAT('%', :_sid_di, '%') AND KTUID LIKE CONCAT('%', :_ktuid_di, '%') AND C1 LIKE CONCAT('%', :_subject_di, '%') AND C2 LIKE CONCAT('%', :_grade_di, '%') AND C3 LIKE CONCAT('%', :_dept_di, '%')"), {'_sid_di': sid_di,'_ktuid_di': ktuid_di,'_grade_di': grade_di,'_subject_di': subject_di,'_dept_di': dept_di})
+        query = db.engine.execute(
+            text(" \
+                    SELECT * FROM marks WHERE SID LIKE CONCAT('%', :_sid_di, '%') \
+                        AND KTUID LIKE CONCAT('%', :_ktuid_di, '%') \
+                            AND C1 LIKE CONCAT('%', :_subject_di, '%') \
+                                AND C2 LIKE CONCAT('%', :_grade_di, '%') \
+                                    AND C3 LIKE CONCAT('%', :_dept_di, '%')"
+                ),
+                {
+                    '_sid_di': sid_di,
+                    '_ktuid_di': ktuid_di,
+                    '_grade_di': grade_di,
+                    '_subject_di': subject_di,
+                    '_dept_di': dept_di
+                }
+        )
         return render_template("query.html", query=query, sid_d=dept_sid_d, ktuid_d=dept_ktuid_d, subject_d=dept_subject_d, grade_d=dept_grade_d, dept_d=dept_d)
     return render_template("query.html")
 
