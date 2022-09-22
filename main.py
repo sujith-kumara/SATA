@@ -360,5 +360,8 @@ def uploadfile():
 def download():
     return send_file("in.csv", as_attachment=True)
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 app.run()
