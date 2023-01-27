@@ -102,19 +102,19 @@ def index():
 
 @app.route("/studentdetails")
 def studentdetails():
-    query = db.engine.execute(f"SELECT * FROM `student`")
+    query = db.session.execute(text("SELECT * FROM `student`"))
     return render_template("studentdetails.html", query=query)
 
 
 @app.route("/markdetails")
 def markdetails():
-    query = db.engine.execute(f"SELECT * FROM `marks`")
+    query = db.session.execute(text("SELECT * FROM `marks`"))
     return render_template("markdetails.html", query=query)
 
 
 @app.route("/triggers")
 def triggers():
-    query = db.engine.execute(f"SELECT * FROM `trig`")
+    query = db.session.execute(text("SELECT * FROM `trig`"))
     return render_template("triggers.html", query=query)
 
 
@@ -125,7 +125,7 @@ def search():
         bio = Student.query.filter_by(rollno=rollno).first()
         attend = Attendence.query.filter_by(rollno=rollno).first()
         ktuid = request.form.get("ktuid")
-        query = db.engine.execute(f"SELECT * FROM marks WHERE KTUID='{ktuid}'")
+        query = db.session.execute(text("SELECT * FROM marks WHERE KTUID='{ktuid}'"))
         return render_template("search.html", bio=bio, attend=attend, query=query)
     return render_template("search.html")
 
@@ -138,12 +138,12 @@ def query():
         grade=request.form.get("grade")
         dept=request.form.get("dept")
         print(f"NM: sid {sid} ktuid {ktuid} subject {subject} grade {grade} dept {dept}")
-        # query = db.engine.execute(f"SELECT * FROM `marks` WHERE KTUID = '{ktuid}'")
-        sid_d = db.engine.execute(f"SELECT DISTINCT SID FROM `marks`")
-        ktuid_d = db.engine.execute(f"SELECT DISTINCT KTUID FROM `marks`")
-        subject_d = db.engine.execute(f"SELECT DISTINCT C1 FROM `marks`")
-        grade_d = db.engine.execute(f"SELECT DISTINCT C2 FROM `marks`")
-        dept_d = db.engine.execute(f"SELECT DISTINCT C3 FROM `marks`")
+        # query = db.session.execute(text("SELECT * FROM `marks` WHERE KTUID = '{ktuid}'"))
+        sid_d = db.session.execute(text("SELECT DISTINCT SID FROM `marks`"))
+        ktuid_d = db.session.execute(text("SELECT DISTINCT KTUID FROM `marks`"))
+        subject_d = db.session.execute(text("SELECT DISTINCT C1 FROM `marks`"))
+        grade_d = db.session.execute(text("SELECT DISTINCT C2 FROM `marks`"))
+        dept_d = db.session.execute(text("SELECT DISTINCT C3 FROM `marks`"))
         # for row in query:
         #     print(row._asdict())
         sid_di=ktuid=request.form.get("sid_di")
@@ -162,11 +162,11 @@ def query():
         if dept_di == 'DEPARTMENT':
             dept_di = ''
         print(f"DI: sid_di {sid_di} ktuid_di {ktuid_di} subject_di {subject_di} grade_di {grade_di} dept_di {dept_di}")
-        dept_sid_d = db.engine.execute(f"SELECT DISTINCT SID FROM `marks` WHERE C3 = '{dept_di}'")
-        dept_ktuid_d = db.engine.execute(f"SELECT DISTINCT KTUID FROM `marks` WHERE C3 = '{dept_di}'")
-        dept_subject_d = db.engine.execute(f"SELECT DISTINCT C1 FROM `marks` WHERE C3 = '{dept_di}'")
-        dept_grade_d = db.engine.execute(f"SELECT DISTINCT C2 FROM `marks` WHERE C3 = '{dept_di}'")
-        query = db.engine.execute(
+        dept_sid_d = db.session.execute(text("SELECT DISTINCT SID FROM `marks` WHERE C3 = '{dept_di}'"))
+        dept_ktuid_d = db.session.execute(text("SELECT DISTINCT KTUID FROM `marks` WHERE C3 = '{dept_di}'"))
+        dept_subject_d = db.session.execute(text("SELECT DISTINCT C1 FROM `marks` WHERE C3 = '{dept_di}'"))
+        dept_grade_d = db.session.execute(text("SELECT DISTINCT C2 FROM `marks` WHERE C3 = '{dept_di}'"))
+        query = db.session.execute(
             text(" \
                     SELECT * FROM marks WHERE SID LIKE CONCAT('%', :_sid_di, '%') \
                         AND KTUID LIKE CONCAT('%', :_ktuid_di, '%') \
@@ -183,7 +183,7 @@ def query():
                 }
         )
         # CALL grade_pct('F', 'CS');
-        stats = db.engine.execute(
+        stats = db.session.execute(
             text("CALL dept_subj_grade_pct(:_dept, :_subject, :_grade)"),
             {
                 '_dept': dept_di,
@@ -196,13 +196,13 @@ def query():
 
 @app.route("/deletemarks/<string:id>", methods=["POST", "GET"])
 def deletemarks(id):
-    db.engine.execute(f"DELETE FROM marks WHERE marks.SID='{id}'")
+    db.session.execute(text("DELETE FROM marks WHERE marks.SID='{id}'"))
     flash("Slot Deleted Successful", "danger")
     return redirect("/markdetails")
 
 @app.route("/editmarks/<string:id>", methods=["POST", "GET"])
 def editmarks(id):
-    depts = db.engine.execute(f"SELECT DISTINCT C3 FROM `marks`")
+    depts = db.session.execute(text("SELECT DISTINCT C3 FROM `marks`"))
     posts = Marks.query.filter_by(SID=id).first()
     if request.method == "POST":
         sid=request.form.get("sid")
@@ -210,7 +210,7 @@ def editmarks(id):
         subject=request.form.get("subject")
         grade=request.form.get("grade")
         dept=request.form.get("dept")
-        query = db.engine.execute(f"UPDATE `marks` SET `KTUID`='{ktuid}', `C1`='{subject}', `C2`='{grade}', `C3`='{dept}' WHERE SID='{sid}'")
+        query = db.session.execute(text("UPDATE `marks` SET `KTUID`='{ktuid}', `C1`='{subject}', `C2`='{grade}', `C3`='{dept}' WHERE SID='{sid}'"))
         flash("Slot Updated", "success")
         return redirect("/markdetails")
     return render_template("editmarks.html", posts=posts, depts=depts)
@@ -218,14 +218,14 @@ def editmarks(id):
 @app.route("/delete/<string:id>", methods=["POST", "GET"])
 @login_required
 def delete(id):
-    db.engine.execute(f"DELETE FROM `student` WHERE `student`.`id`={id}")
+    db.session.execute(text("DELETE FROM `student` WHERE `student`.`id`={id}"))
     flash("Slot Deleted Successful", "danger")
     return redirect("/studentdetails")
 
 @app.route("/edit/<string:id>", methods=["POST", "GET"])
 @login_required
 def edit(id):
-    dept = db.engine.execute("SELECT * FROM `department`")
+    dept = db.session.execute(text("SELECT * FROM `department`"))
     posts = Student.query.filter_by(id=id).first()
     if request.method == "POST":
         rollno = request.form.get("rollno")
@@ -236,9 +236,9 @@ def edit(id):
         email = request.form.get("email")
         num = request.form.get("num")
         address = request.form.get("address")
-        query = db.engine.execute(
-            f"UPDATE `student` SET `rollno`='{rollno}',`sname`='{sname}',`sem`='{sem}',`gender`='{gender}',`branch`='{branch}',`email`='{email}',`number`='{num}',`address`='{address}'"
-        )
+        query = db.session.execute(text(
+            "UPDATE `student` SET `rollno`='{rollno}',`sname`='{sname}',`sem`='{sem}',`gender`='{gender}',`branch`='{branch}',`email`='{email}',`number`='{num}',`address`='{address}'"
+        ))
         flash("Slot Updated", "success")
         return redirect("/studentdetails")
 
@@ -257,9 +257,9 @@ def signup():
             return render_template("/signup.html")
         encpassword = generate_password_hash(password)
 
-        new_user = db.engine.execute(
-            f"INSERT INTO `user` (`username`,`email`,`password`) VALUES ('{username}','{email}','{encpassword}')"
-        )
+        new_user = db.session.execute(text(
+            "INSERT INTO `user` (`username`,`email`,`password`) VALUES ('{username}','{email}','{encpassword}')"
+        ))
 
         # this is method 2 to save data in db
         # newuser=User(username=username,email=email,password=encpassword)
@@ -300,7 +300,7 @@ def logout():
 @app.route("/addstudent", methods=["POST", "GET"])
 @login_required
 def addstudent():
-    dept = db.engine.execute("SELECT * FROM `department`")
+    dept = db.session.execute(text("SELECT * FROM `department`"))
     if request.method == "POST":
         rollno = request.form.get("rollno")
         sname = request.form.get("sname")
@@ -310,9 +310,9 @@ def addstudent():
         email = request.form.get("email")
         num = request.form.get("num")
         address = request.form.get("address")
-        query = db.engine.execute(
-            f"INSERT INTO `student` (`rollno`,`sname`,`sem`,`gender`,`branch`,`email`,`number`,`address`) VALUES ('{rollno}','{sname}','{sem}','{gender}','{branch}','{email}','{num}','{address}')"
-        )
+        query = db.session.execute(text(
+            "INSERT INTO `student` (`rollno`,`sname`,`sem`,`gender`,`branch`,`email`,`number`,`address`) VALUES ('{rollno}','{sname}','{sem}','{gender}','{branch}','{email}','{num}','{address}')"
+        ))
 
         flash("Booking Confirmed", "info")
 
